@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",          // или "./src" - зависит от структуры
+    "paths": {
+      "@/*": ["src/*"]       // обычно без точки в начале
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
