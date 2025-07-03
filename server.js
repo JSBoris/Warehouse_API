@@ -24,7 +24,7 @@ app.use('/api-proxy', async (req, res) => {
 })
 
 // SPA fallback
-app.get('*', (req, res) => {
+app.get(/^\/(?!api-proxy).*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 
