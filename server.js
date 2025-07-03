@@ -3,38 +3,31 @@ import fetch from 'node-fetch'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
 const app = express()
 const port = process.env.PORT || 3000
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// Статика (dist)
+// Раздача фронтенда
 app.use(express.static(path.join(__dirname, 'dist')))
 
-// Прокси запросов к API
-app.get('/api-proxy/*', async (req, res) => {
-  const targetPath = req.originalUrl.replace('/api-proxy', '')
-  const targetUrl = `http://109.73.206.144:6969${targetPath}`
-
+// Проксирование запросов к API
+app.use('/api-proxy', async (req, res) => {
+  const targetUrl = 'http://109.73.206.144:6969' + req.originalUrl.replace('/api-proxy', '')
   try {
     const response = await fetch(targetUrl)
-    const contentType = response.headers.get('content-type') || 'application/json'
     const data = await response.text()
-
-    res.set('Content-Type', contentType)
+    res.set('Content-Type', 'application/json')
     res.send(data)
   } catch (err) {
-    console.error('Ошибка при проксировании:', err.message)
-    res.status(500).json({ error: 'Ошибка при проксировании запроса' })
+    res.status(500).send({ error: 'Ошибка при проксировании запроса' })
   }
 })
 
-// Для всех остальных путей — index.html (SPA)
+// SPA fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 
 app.listen(port, () => {
-  console.log(`✅ Сервер запущен на http://localhost:${port}`)
+  console.log(`Сервер запущен на http://localhost:${port}`)
 })
