@@ -92,7 +92,7 @@ const showMore = () => {
 //  Функция получения сегодняшней даты в формате YYYY-MM-DD
 const getYesterdayDate = () => {
   const yesterday = new Date()
-  yesterday.setDate(yesterday.getDate() - 1) // ⬅️ отнимаем один день
+  yesterday.setDate(yesterday.getDate()) // ⬅️ отнимаем один день
 
   const year = yesterday.getFullYear()
   const month = String(yesterday.getMonth() + 1).padStart(2, '0')
