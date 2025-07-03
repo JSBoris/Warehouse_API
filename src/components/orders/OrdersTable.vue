@@ -92,7 +92,7 @@ const showMore = () => {
 // Загрузка заказов
 const fetchOrders = async () => {
   const url =
-    'http://109.73.206.144:6969/api/orders?dateFrom=2025-06-01&dateTo=2025-06-28&page=1&limit=500&key=E6kUTYrYwZq2tN4QEtyzsbEBk3ie'
+    '/api-proxy/api/orders?dateFrom=2025-06-01&dateTo=2025-06-28&page=1&limit=500&key=E6kUTYrYwZq2tN4QEtyzsbEBk3ie'
 
   try {
     const response = await fetch(url)
